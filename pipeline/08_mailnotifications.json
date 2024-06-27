@@ -1,0 +1,88 @@
+{
+	"name": "08_mailnotifications",
+	"properties": {
+		"activities": [
+			{
+				"name": "Execute Pipeline1",
+				"type": "ExecutePipeline",
+				"dependsOn": [],
+				"policy": {
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"pipeline": {
+						"referenceName": "04_storageaccountcsv",
+						"type": "PipelineReference"
+					},
+					"waitOnCompletion": true
+				}
+			},
+			{
+				"name": "Success_case",
+				"type": "WebActivity",
+				"dependsOn": [
+					{
+						"activity": "Execute Pipeline1",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"method": "POST",
+					"url": "https://prod2-07.canadacentral.logic.azure.com:443/workflows/3fb81931ea304296bb9e0c4369c6494f/triggers/manual/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=faqNVKVvXJKsvoWc31DLripjyQOl5XuxVvWbtzVN9N4",
+					"body": {
+						"Message": "Current pipeline Success",
+						"DataFactoryName": "@{pipeline().DataFactory}",
+						"PipelineName": "@{pipeline().pipeline}",
+						"EmailTo": "mpspmp2003@gmail.com,,kanizfatema2086@gmail.com",
+						"Subject": "Pipeline Success!"
+					}
+				}
+			},
+			{
+				"name": "Failure_Case",
+				"type": "WebActivity",
+				"dependsOn": [
+					{
+						"activity": "Execute Pipeline1",
+						"dependencyConditions": [
+							"Failed"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"method": "POST",
+					"url": "https://prod2-07.canadacentral.logic.azure.com:443/workflows/3fb81931ea304296bb9e0c4369c6494f/triggers/manual/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=faqNVKVvXJKsvoWc31DLripjyQOl5XuxVvWbtzVN9N4",
+					"body": {
+						"Message": "Current pipeline failed",
+						"DataFactoryName": "@{pipeline().DataFactory}",
+						"PipelineName": "@{pipeline().pipeline}",
+						"EmailTo": "mpspmp2003@gmail.com,asumon@gmail.com",
+						"Subject": "Pipeline Failed!"
+					}
+				}
+			}
+		],
+		"annotations": [],
+		"lastPublishTime": "2024-06-19T22:41:57Z"
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}

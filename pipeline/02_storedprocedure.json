@@ -1,0 +1,30 @@
+{
+	"name": "02_storedprocedure",
+	"properties": {
+		"activities": [
+			{
+				"name": "loadcustomer_proc",
+				"type": "SqlServerStoredProcedure",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"storedProcedureName": "[dbo].[loadcustomerdata]"
+				},
+				"linkedServiceName": {
+					"referenceName": "AzureSqlDatabase2",
+					"type": "LinkedServiceReference"
+				}
+			}
+		],
+		"annotations": [],
+		"lastPublishTime": "2024-06-09T22:00:13Z"
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}

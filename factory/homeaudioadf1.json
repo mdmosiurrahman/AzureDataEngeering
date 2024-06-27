@@ -1,0 +1,9 @@
+{
+	"name": "homeaudioadf1",
+	"location": "canadacentral",
+	"identity": {
+		"type": "SystemAssigned",
+		"principalId": "e800299d-823f-4cf0-a57d-8cc2d909f779",
+		"tenantId": "6b0bdca0-96c1-4f25-8ea4-8c397c990d82"
+	}
+}
